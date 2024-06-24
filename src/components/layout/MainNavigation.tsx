@@ -30,7 +30,7 @@ const MainNavigation: React.FC = () => {
           </Link>
 
           {MENU_ENTRIES.map((entry) => (
-            <Tooltip key={entry.href}>
+            <Tooltip key={entry.href} delayDuration={0}>
               <TooltipTrigger asChild>
                 <Link
                   to={entry.href}
@@ -49,7 +49,7 @@ const MainNavigation: React.FC = () => {
           ))}
         </nav>
         <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-4">
-          <Tooltip>
+          <Tooltip delayDuration={0}>
             <TooltipTrigger asChild>
               <Link
                 href="#"
@@ -80,7 +80,7 @@ const MainNavigation: React.FC = () => {
                 className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
               >
                 <RocketIcon className="h-5 w-5 transition-all group-hover:scale-110" />
-                <span className="sr-only">Acme Inc</span>
+                <span className="sr-only">Pocket SaaS</span>
               </Link>
               {MENU_ENTRIES.map((entry) => (
                 <Link

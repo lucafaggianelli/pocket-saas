@@ -139,7 +139,7 @@ const UserAuthForm = () => {
   return (
     <>
       <CardDescription>
-        Or use your email and password to access your account.
+        Use your email and password to access your account.
       </CardDescription>
 
       <div className="flex justify-end">
@@ -210,8 +210,6 @@ function LoginForm() {
           {hasPasswordAuth && hasSocialAuth && <Separator />}
 
           {hasPasswordAuth && <UserAuthForm />}
-
-          <div>Admin sign in</div>
         </CardContent>
       </Card>
     </div>
