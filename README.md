@@ -2,14 +2,7 @@
 
 This template provides a minimal setup to get started with PocketBase.
 
-To use this template click on the **Use this template** button on the top of the repository
-and click on **Create a new repository**, or go directly to
-[this link](https://github.com/new?template_name=pocket-saas&template_owner=lucafaggianelli).
-
-If you don't want to create a new repository, you can clone this repository or download the code
-as a zip file and start from there.
-
-## Tech stack
+## 🥞 Tech stack
 - [React](https://reactjs.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [shadcn/ui](https://ui.shadcn.com/)
@@ -19,7 +12,16 @@ as a zip file and start from there.
 - [pnpm](https://pnpm.io/)
 
 
-## Getting Started
+## 🚀 Getting Started
+
+To use this template click on the **Use this template** button on the top of the repository
+and click on **Create a new repository**, or go directly to
+[this link](https://github.com/new?template_name=pocket-saas&template_owner=lucafaggianelli).
+
+If you don't want to create a new repository, you can clone this repository or download the code
+as a zip file and start from there.
+
+### Install dependencies
 
 Install the dependencies:
 
@@ -35,13 +37,24 @@ Run the frontend server:
 pnpm dev
 ```
 
+Download PocketBase binary:
+
+> 🙋 Why PocketBase binary is not included into the template? Because its binary
+> is platform-specific and must be downloaded directly from Github.
+
+```bash
+pnpm pb:download
+```
+
+The above script should work on most platforms, if it doesn't work for you, you can download the binary manually from [Github](https://github.com/pocketbase/pocketbase/releases) and place it in the folder `<project-root>/pocketbase/`
+
 Run PocketBase:
 
 ```bash
 pnpm pb:server
 ```
 
-## How to use this template
+## 📖 How to use this template
 
 ### Pages
 

@@ -25,3 +25,4 @@ dist-ssr
 
 # PocketBase
 pocketbase/pb_data
+pocketbase/pocketbase

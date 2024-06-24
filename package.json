@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "pb:serve": "./pocketbase/pocketbase serve"
+    "pb:serve": "./pocketbase/pocketbase serve",
+    "pb:download": "node scripts/download-pocketbase.js"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.0",
