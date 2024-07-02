@@ -117,5 +117,5 @@ This template includes a Dockerfile to host the application anywhere.
 
 ### Fly.io
 
-To host on Fly.io, you can use the provided Dockerfile, them just follow the instructions from
-PocketBase [https://github.com/pocketbase/pocketbase/discussions/537](this Github discussion).
+To host on Fly.io, you can use the provided Dockerfile, then just follow the instructions from
+https://github.com/pocketbase/pocketbase/discussions/537
