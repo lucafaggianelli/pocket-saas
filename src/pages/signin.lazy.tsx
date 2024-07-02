@@ -235,7 +235,7 @@ function LoginForm() {
               }}
             >
               <img
-                src={pb.baseUrl + `/_/images/oauth2/${provider.name}.svg`}
+                src={`${pb.baseUrl}_/images/oauth2/${provider.name}.svg`}
                 className="h-4 w-4 mr-4"
               />
               Sign in with {provider.displayName}

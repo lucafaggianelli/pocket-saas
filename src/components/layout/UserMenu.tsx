@@ -31,7 +31,7 @@ const PocketBaseMenu = () => (
     <DropdownMenuGroup>
       <DropdownMenuLabel>PocketBase</DropdownMenuLabel>
       <DropdownMenuItem asChild>
-        <a href={`${pb.baseUrl}/_`} target="_blank">
+        <a href={`${pb.baseUrl}_`} target="_blank">
           <DashboardIcon className="w-5 h-5 mr-4" />
           Admin portal
         </a>
@@ -79,7 +79,7 @@ export default function UserMenu() {
 
   if (isAdmin && user.avatar && Number.isFinite(user.avatar)) {
     // This is to handle the default admin user avatar that is stored as a number
-    avatarUrl = `${pb.baseUrl}/_/images/avatars/avatar${user.avatar}.svg`;
+    avatarUrl = `${pb.baseUrl}_/images/avatars/avatar${user.avatar}.svg`;
   } else if (user.avatar) {
     avatarUrl = pb.files.getUrl(user, user.avatar);
   }
