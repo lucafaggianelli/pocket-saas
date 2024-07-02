@@ -1,5 +1,5 @@
 import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
-import { AuthMethodsList } from "pocketbase";
+import { AuthMethodsList, RecordAuthResponse, RecordModel } from "pocketbase";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -20,6 +20,40 @@ import { getRedirectAfterSignIn } from "@/lib/auth";
 export const Route = createLazyFileRoute("/signin")({
   component: LoginForm,
 });
+
+/**
+ * Look for the user name and avatar in the OAuth2 provider's response and update the user's
+ * profile.
+ *
+ * @param authData data returned from the OAuth2 provider after successful authentication
+ * @returns
+ */
+const updateProfileFromOAuth2 = async (
+  authData: RecordAuthResponse<RecordModel>
+) => {
+  const meta = authData.meta;
+
+  if (!meta) {
+    return;
+  }
+
+  const formData = new FormData();
+
+  if (meta.avatarUrl) {
+    const response = await fetch(meta.avatarUrl);
+
+    if (response.ok) {
+      const file = await response.blob();
+      formData.append("avatar", file);
+    }
+  }
+
+  if (meta.name) {
+    formData.append("name", meta.name);
+  }
+
+  await pb.collection("users").update(authData.record.id, formData);
+};
 
 const UserLoginForm = () => {
   const navigate = useNavigate();
@@ -192,9 +226,10 @@ function LoginForm() {
               className="w-full"
               variant="outline"
               onClick={async () => {
-                await pb
+                const authData = await pb
                   .collection("users")
                   .authWithOAuth2({ provider: provider.name });
+                await updateProfileFromOAuth2(authData);
 
                 navigate({ to: getRedirectAfterSignIn() });
               }}

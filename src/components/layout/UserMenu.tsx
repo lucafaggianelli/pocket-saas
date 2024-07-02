@@ -75,10 +75,14 @@ export default function UserMenu() {
   const primaryName = user.name || user.email;
   const secondaryName = user.name ? user.email : null;
 
-  const avatar =
-    user.avatar && Number.isFinite(user.avatar)
-      ? `${pb.baseUrl}/_/images/avatars/avatar${user.avatar}.svg`
-      : user.avatar;
+  let avatarUrl: string | undefined = undefined;
+
+  if (isAdmin && user.avatar && Number.isFinite(user.avatar)) {
+    // This is to handle the default admin user avatar that is stored as a number
+    avatarUrl = `${pb.baseUrl}/_/images/avatars/avatar${user.avatar}.svg`;
+  } else if (user.avatar) {
+    avatarUrl = pb.files.getUrl(user, user.avatar);
+  }
 
   return (
     <DropdownMenu>
@@ -89,7 +93,7 @@ export default function UserMenu() {
           className="overflow-hidden rounded-full"
         >
           <Avatar>
-            <AvatarImage src={avatar} alt={user.name || user.email} />
+            <AvatarImage src={avatarUrl} alt={user.name || user.email} />
             <AvatarFallback>{initials}</AvatarFallback>
           </Avatar>
         </Button>
