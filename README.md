@@ -110,3 +110,12 @@ After signing up an email is sent to the user for email verification.
 
 After a successful sign in, the user is redirected to the `/` page or to the page they were trying to access before
 signing in (see Auth-only pages section).
+
+## Hosting
+
+This template includes a Dockerfile to host the application anywhere.
+
+### Fly.io
+
+To host on Fly.io, you can use the provided Dockerfile, them just follow the instructions from
+PocketBase [https://github.com/pocketbase/pocketbase/discussions/537](this Github discussion).
