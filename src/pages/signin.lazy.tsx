@@ -1,5 +1,5 @@
 import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
-import { AuthMethodsList, RecordAuthResponse, RecordModel } from "pocketbase";
+import { AuthMethodsList, RecordAuthResponse } from "pocketbase";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,7 @@ import { pb } from "@/lib/pocketbase";
 import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import { getRedirectAfterSignIn } from "@/lib/auth";
+import { UsersResponse } from "@/lib/pocketbase-types";
 
 export const Route = createLazyFileRoute("/signin")({
   component: LoginForm,
@@ -29,7 +30,7 @@ export const Route = createLazyFileRoute("/signin")({
  * @returns
  */
 const updateProfileFromOAuth2 = async (
-  authData: RecordAuthResponse<RecordModel>
+  authData: RecordAuthResponse<UsersResponse>
 ) => {
   const meta = authData.meta;
 
@@ -229,6 +230,7 @@ function LoginForm() {
                 const authData = await pb
                   .collection("users")
                   .authWithOAuth2({ provider: provider.name });
+
                 await updateProfileFromOAuth2(authData);
 
                 navigate({ to: getRedirectAfterSignIn() });
