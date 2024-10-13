@@ -1,6 +1,6 @@
 FROM node:20-alpine
 
-ARG PB_VERSION=0.22.14
+ARG PB_VERSION=0.22.21
 
 RUN apk add --no-cache \
     unzip \
