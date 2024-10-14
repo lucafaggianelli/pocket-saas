@@ -13,12 +13,12 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './pages/__root'
-import { Route as ProtectedImport } from './pages/protected'
+import { Route as AppImport } from './pages/_app'
 
 // Create Virtual Routes
 
 const SigninLazyImport = createFileRoute('/signin')()
-const IndexLazyImport = createFileRoute('/')()
+const AppIndexLazyImport = createFileRoute('/_app/')()
 
 // Create/Update Routes
 
@@ -27,32 +27,25 @@ const SigninLazyRoute = SigninLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./pages/signin.lazy').then((d) => d.Route))
 
-const ProtectedRoute = ProtectedImport.update({
-  path: '/protected',
+const AppRoute = AppImport.update({
+  id: '/_app',
   getParentRoute: () => rootRoute,
 } as any)
 
-const IndexLazyRoute = IndexLazyImport.update({
+const AppIndexLazyRoute = AppIndexLazyImport.update({
   path: '/',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./pages/index.lazy').then((d) => d.Route))
+  getParentRoute: () => AppRoute,
+} as any).lazy(() => import('./pages/_app/index.lazy').then((d) => d.Route))
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/protected': {
-      id: '/protected'
-      path: '/protected'
-      fullPath: '/protected'
-      preLoaderRoute: typeof ProtectedImport
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AppImport
       parentRoute: typeof rootRoute
     }
     '/signin': {
@@ -62,16 +55,68 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SigninLazyImport
       parentRoute: typeof rootRoute
     }
+    '/_app/': {
+      id: '/_app/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof AppIndexLazyImport
+      parentRoute: typeof AppImport
+    }
   }
 }
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({
-  IndexLazyRoute,
-  ProtectedRoute,
-  SigninLazyRoute,
-})
+interface AppRouteChildren {
+  AppIndexLazyRoute: typeof AppIndexLazyRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppIndexLazyRoute: AppIndexLazyRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
+export interface FileRoutesByFullPath {
+  '': typeof AppRouteWithChildren
+  '/signin': typeof SigninLazyRoute
+  '/': typeof AppIndexLazyRoute
+}
+
+export interface FileRoutesByTo {
+  '/signin': typeof SigninLazyRoute
+  '/': typeof AppIndexLazyRoute
+}
+
+export interface FileRoutesById {
+  __root__: typeof rootRoute
+  '/_app': typeof AppRouteWithChildren
+  '/signin': typeof SigninLazyRoute
+  '/_app/': typeof AppIndexLazyRoute
+}
+
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths: '' | '/signin' | '/'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/signin' | '/'
+  id: '__root__' | '/_app' | '/signin' | '/_app/'
+  fileRoutesById: FileRoutesById
+}
+
+export interface RootRouteChildren {
+  AppRoute: typeof AppRouteWithChildren
+  SigninLazyRoute: typeof SigninLazyRoute
+}
+
+const rootRouteChildren: RootRouteChildren = {
+  AppRoute: AppRouteWithChildren,
+  SigninLazyRoute: SigninLazyRoute,
+}
+
+export const routeTree = rootRoute
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
 /* prettier-ignore-end */
 
@@ -81,19 +126,22 @@ export const routeTree = rootRoute.addChildren({
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/",
-        "/protected",
+        "/_app",
         "/signin"
       ]
     },
-    "/": {
-      "filePath": "index.lazy.tsx"
-    },
-    "/protected": {
-      "filePath": "protected.tsx"
+    "/_app": {
+      "filePath": "_app.tsx",
+      "children": [
+        "/_app/"
+      ]
     },
     "/signin": {
       "filePath": "signin.lazy.tsx"
+    },
+    "/_app/": {
+      "filePath": "_app/index.lazy.tsx",
+      "parent": "/_app"
     }
   }
 }

@@ -3,6 +3,7 @@
 This template provides a minimal setup to get started with PocketBase.
 
 ## 🥞 Tech stack
+
 - [PocketBase](https://pocketbase.io/) - A serverless database with authentication and authorization
 - [React](https://reactjs.org/) - A JavaScript library for building user interfaces
 - [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework
@@ -12,7 +13,6 @@ This template provides a minimal setup to get started with PocketBase.
 - [PocketBase Typegen](https://github.com/patmood/pocketbase-typegen) - A tool to generate TypeScript types for PocketBase
 - [Vite](https://vitejs.dev/) - A fast frontend build tool
 - [pnpm](https://pnpm.io/) - A fast, disk space efficient package manager
-
 
 ## 🚀 Getting Started
 
@@ -86,10 +86,18 @@ so check the documentation for more information.
 ### Auth-only pages
 
 To protect a page so that only authenticated users can access it, you can use the `protectPage` helper
-in the page declaration:
+in the page declaration.
+
+By default this template ships with a protected router group
+located in `src/pages/_app/`, all the pages inside this folder are
+protected (and they also share a `Layout` component),
+though the `/_app` path will not show in the URL, this is
+a feature of the router, check the `src/pages/_app.tsx` file for more information.
+
+If you want to protect a single page, you can use the `protectPage` helper like in the example below:
 
 > Note: protected pages or any other page that requires a check before loading (i.e. using `beforeLoad` function)
-  can't be lazy loaded.
+> can't be lazy loaded.
 
 ```tsx
 import { createFileRoute } from "@tanstack/react-router";
