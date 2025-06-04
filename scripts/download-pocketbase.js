@@ -67,7 +67,6 @@ const downloadAndExtract = async (url) => {
 
 const main = async () => {
   const data = await getReleaseInfo();
- console.log(`Platform: ${platform}, Architecture: ${arch}`); 
   const asset = data.assets.find(
     (asset) =>
       asset.name.includes(`${platform}_${arch}`) &&
