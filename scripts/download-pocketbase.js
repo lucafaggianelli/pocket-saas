@@ -14,7 +14,11 @@ const GITHUB_REPO_URL =
 const POCKETBASE_DIR = path.join(cwd(), "pocketbase");
 
 const platform = os.platform();
-const arch = os.arch();
+let arch = os.arch();
+if (platform === "linux" && arch === "x64") {
+  // For Linux x64, we use the 'amd64' architecture
+  arch = "amd64";
+}
 
 // get release info from github
 const getReleaseInfo = async () => {
@@ -63,7 +67,7 @@ const downloadAndExtract = async (url) => {
 
 const main = async () => {
   const data = await getReleaseInfo();
-
+ console.log(`Platform: ${platform}, Architecture: ${arch}`); 
   const asset = data.assets.find(
     (asset) =>
       asset.name.includes(`${platform}_${arch}`) &&
